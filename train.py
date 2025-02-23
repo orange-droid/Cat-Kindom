@@ -13,7 +13,7 @@ class TrainingBoard(Board):
         self.is_destroyed = False  # 标记窗口是否被销毁
         self.after_ids = []  # 存储所有 after 的标识符
         self.skip_turns = {0: 0, 1: 0}  # 记录每个玩家跳过的回合次数
-        self.piece_values = {"农民": 1, "卫兵": 2, "弓箭手": 3, "骑士": 4, "国王": 20}  # 棋子价值表
+        self.piece_values = {"farmer": 1, "soilder": 2, "archer": 3, "knight": 4, "king": 20}  # 棋子价值表
 
         # 初始化界面
         self.turn_label = tk.Label(root, text="当前回合：蓝方", font=("Arial", 14))
@@ -52,7 +52,7 @@ class TrainingBoard(Board):
 
     def setup_pieces(self):
         """随机初始化棋子"""
-        pieces = ["农民"] * 4 + ["卫兵"] * 4 + ["弓箭手"] * 2 + ["骑士"] + ["国王"]
+        pieces = ["farmer"] * 4 + ["soilder"] * 4 + ["archer"] * 2 + ["knight"] + ["king"]
         blue_pieces = [Piece(piece, 0, "unknown", 0, 1) for piece in pieces]
         red_pieces = [Piece(piece, 1, "unknown", 0, 1) for piece in pieces]
         all_pieces = blue_pieces + red_pieces
@@ -137,8 +137,8 @@ class TrainingBoard(Board):
 
     def check_game_over(self):
         """检查游戏是否结束"""
-        blue_king_alive = any(piece.name == "国王" and piece.alive == 1 and piece.player == 0 for row in self.board for piece in row if piece)
-        red_king_alive = any(piece.name == "国王" and piece.alive == 1 and piece.player == 1 for row in self.board for piece in row if piece)
+        blue_king_alive = any(piece.name == "king" and piece.alive == 1 and piece.player == 0 for row in self.board for piece in row if piece)
+        red_king_alive = any(piece.name == "king" and piece.alive == 1 and piece.player == 1 for row in self.board for piece in row if piece)
 
         if self.skip_turns[0] > 50:
             print("蓝方跳过回合超过50次，红方获胜")
@@ -149,7 +149,7 @@ class TrainingBoard(Board):
 
         remaining_pieces = [piece for row in self.board for piece in row if piece and piece.alive == 1]
         if len(remaining_pieces) == 2:
-            piece_values = {"农民": 1, "卫兵": 2, "弓箭手": 3, "骑士": 4, "国王": 20}
+            piece_values = {"farmer": 1, "soilder": 2, "archer": 3, "knight": 4, "king": 20}
             remaining_values = [piece_values[piece.name] for piece in remaining_pieces]
             if remaining_values[0] > remaining_values[1]:
                 print("等级高的玩家获胜")

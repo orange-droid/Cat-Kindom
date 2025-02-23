@@ -40,7 +40,7 @@ class GameManager:
         self.update_turn_label()
 
     def setup_board(self):
-        pieces = ["农民"] * 4 + ["卫兵"] * 4 + ["弓箭手"] * 2 + ["骑士"] + ["国王"]
+        pieces = ["farmer"] * 4 + ["soilder"] * 4 + ["archer"] * 2 + ["knight"] + ["king"]
         blue_pieces = [Piece(piece, 0, "unknown", 0, 1) for piece in pieces]
         red_pieces = [Piece(piece, 1, "unknown", 0, 1) for piece in pieces]
         all_pieces = blue_pieces + red_pieces
@@ -119,15 +119,15 @@ class GameManager:
             messagebox.showerror("无效移动", f"{from_piece.name} 无法捕获 {to_piece.name}")
 
     def check_game_status(self):
-        blue_king_alive = any(piece.name == "国王" and piece.alive == 1 and piece.player == 0 for row in self.board.board for piece in row if piece)
-        red_king_alive = any(piece.name == "国王" and piece.alive == 1 and piece.player == 1 for row in self.board.board for piece in row if piece)
+        blue_king_alive = any(piece.name == "king" and piece.alive == 1 and piece.player == 0 for row in self.board.board for piece in row if piece)
+        red_king_alive = any(piece.name == "king" and piece.alive == 1 and piece.player == 1 for row in self.board.board for piece in row if piece)
 
         if not blue_king_alive:
-            messagebox.showinfo("游戏结束", "蓝方国王被击杀，红方获胜！")
+            messagebox.showinfo("Game Over", "蓝方国王被击杀，红方获胜！")
             self.update_wins("红方")
             self.end_game()
         elif not red_king_alive:
-            messagebox.showinfo("游戏结束", "红方国王被击杀，蓝方获胜！")
+            messagebox.showinfo("Game Over", "红方国王被击杀，蓝方获胜！")
             self.update_wins("蓝方")
             self.end_game()
         else:
@@ -179,7 +179,7 @@ class GameManager:
         remaining_pieces = [piece for row in self.board.board for piece in row if piece and piece.alive == 1]
         if len(remaining_pieces) == 2:
             piece1, piece2 = remaining_pieces
-            piece_rank = {"农民": 1, "卫兵": 2, "弓箭手": 3, "骑士": 4, "国王": 5}
+            piece_rank = {"farmer": 1, "soilder": 2, "archer": 3, "knight": 4, "king": 5}
             if piece_rank[piece1.name] > piece_rank[piece2.name]:
                 winner = self.players[piece1.player]
             elif piece_rank[piece1.name] < piece_rank[piece2.name]:

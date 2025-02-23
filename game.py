@@ -5,7 +5,7 @@ from game_logic import GameManager
 class RoyalChess:
     def __init__(self, root):
         self.root = root
-        self.root.title("皇家战棋")
+        self.root.title("喵喵战旗 CAT-KINGDOM")
         self.game_manager = None
         self.blue_wins = 0
         self.red_wins = 0

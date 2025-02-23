@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import messagebox
 import random
+import time
 from board import Board
 from piece import Piece
 from ai import QLearningAgent
@@ -14,7 +15,7 @@ class TestBoard(Board):
         self.size = size
         self.current_player = None  # 当前玩家，初始化为 None，等待开始游戏时决定
         self.agents = [QLearningAgent(), QLearningAgent()]  # 初始化两个智能体
-        self.piece_values = {"农民": 1, "卫兵": 2, "弓箭手": 3, "骑士": 4, "国王": 20}  # 棋子价值表
+        self.piece_values = {"farmer": 1, "soilder": 2, "archer": 3, "knight": 4, "king": 20}  # 棋子价值表
         self.skip_turns = {0: 0, 1: 0}  # 记录每个玩家跳过的回合次数
 
         # 初始化界面
@@ -46,7 +47,7 @@ class TestBoard(Board):
 
     def setup_pieces(self):
         """随机初始化棋子"""
-        pieces = ["农民"] * 4 + ["卫兵"] * 4 + ["弓箭手"] * 2 + ["骑士"] + ["国王"]
+        pieces = ["farmer"] * 4 + ["soilder"] * 4 + ["archer"] * 2 + ["knight"] + ["king"]
         blue_pieces = [Piece(piece, 0, "unknown", 0, 1) for piece in pieces]
         red_pieces = [Piece(piece, 1, "unknown", 0, 1) for piece in pieces]
         all_pieces = blue_pieces + red_pieces
@@ -129,6 +130,10 @@ class TestBoard(Board):
 
     def ai_turn(self):
         """AI 回合"""
+        self.action_label.config(text="AI思考中...")  # 显示AI思考中
+        self.root.update()  # 更新界面以显示状态
+        time.sleep(0.5)  # 暂停0.5秒
+
         agent = self.agents[self.current_player]
         state = agent.get_state(self.board)
         action = agent.choose_action(state, self.board, self.current_player)
@@ -139,6 +144,7 @@ class TestBoard(Board):
             if unknown_pieces:
                 row, col = random.choice(unknown_pieces)
                 reward = self.flip_piece(row, col)
+                self.action_label.config(text=f"AI翻开棋子：{self.get_piece(row, col).name}，奖励：{reward}")
         elif action == "move":
             known_pieces = [(r, c) for r in range(self.size) for c in range(self.size) if self.get_piece(r, c) and self.get_piece(r, c).state == "known" and self.get_piece(r, c).player == self.current_player]
             if known_pieces:
@@ -147,6 +153,7 @@ class TestBoard(Board):
                 if valid_moves:
                     to_row, to_col = random.choice(valid_moves)
                     reward = self.move_piece(from_row, from_col, to_row, to_col)
+                    self.action_label.config(text=f"AI移动棋子：{self.get_piece(to_row, to_col).name}，奖励：{reward}")
         elif action == "capture":
             capture_actions = []
             for r in range(self.size):
@@ -161,10 +168,11 @@ class TestBoard(Board):
             if capture_actions:
                 from_row, from_col, to_row, to_col = random.choice(capture_actions)
                 reward = self.move_piece(from_row, from_col, to_row, to_col)
+                self.action_label.config(text=f"AI击杀棋子：{self.get_piece(to_row, to_col).name}，奖励：{reward}")
         elif action == "skip":
             self.skip_turns[self.current_player] += 1
-            self.action_label.config(text=f"AI跳过回合")
             reward = -1  # 跳过回合的惩罚
+            self.action_label.config(text=f"AI跳过回合，惩罚：{reward}")
 
         next_state = agent.get_state(self.board)
         agent.update_q_table(state, action, reward, next_state)
@@ -197,11 +205,11 @@ class TestBoard(Board):
                 target_piece.alive = 0
                 self.board[to_row][to_col] = None
                 if self.current_player == 1:  # 只显示 AI 的行为奖励
-                    self.action_label.config(text=f"AI的{piece.name}击杀了{target_piece.name}")
+                    self.action_label.config(text=f"AI的{piece.name}击杀了{target_piece.name}，奖励：{reward}")
             else:
                 reward = -0.1
                 if self.current_player == 1:  # 只显示 AI 的行为奖励
-                    self.action_label.config(text=f"AI移动了{piece.name}")
+                    self.action_label.config(text=f"AI移动了{piece.name}，奖励：{reward}")
             self.board[from_row][from_col] = None
             self.board[to_row][to_col] = piece
             self.canvas.delete("all")
@@ -235,8 +243,8 @@ class TestBoard(Board):
 
     def check_game_over(self):
         """检查游戏是否结束"""
-        blue_king_alive = any(piece.name == "国王" and piece.alive == 1 and piece.player == 0 for row in self.board for piece in row if piece)
-        red_king_alive = any(piece.name == "国王" and piece.alive == 1 and piece.player == 1 for row in self.board for piece in row if piece)
+        blue_king_alive = any(piece.name == "king" and piece.alive == 1 and piece.player == 0 for row in self.board for piece in row if piece)
+        red_king_alive = any(piece.name == "king" and piece.alive == 1 and piece.player == 1 for row in self.board for piece in row if piece)
 
         if not blue_king_alive:
             print("蓝方国王被消灭，红方获胜")
@@ -254,7 +262,7 @@ class TestBoard(Board):
 
         remaining_pieces = [piece for row in self.board for piece in row if piece and piece.alive == 1]
         if len(remaining_pieces) == 2:
-            piece_values = {"农民": 1, "卫兵": 2, "弓箭手": 3, "骑士": 4, "国王": 20}
+            piece_values = {"farmer": 1, "soilder": 2, "archer": 3, "knight": 4, "king": 20}
             remaining_values = [piece_values[piece.name] for piece in remaining_pieces]
             if remaining_values[0] > remaining_values[1]:
                 print("等级高的玩家获胜")
@@ -276,6 +284,6 @@ class TestBoard(Board):
 
 if __name__ == "__main__":
     root = tk.Tk()
-    root.title("Fighting Chess Test")
+    root.title("CAT-KINGDOM Test")
     board = TestBoard(root, size=5)
     root.mainloop()
