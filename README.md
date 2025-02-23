@@ -6,7 +6,7 @@
 
 ## 游戏规则
 <div align="center">
-    <img width="942" alt="287908a6d7e9969bcedb9aa438e5dc7" src="https://github.com/user-attachments/assets/1ca3ec54-5608-4653-86e6-c9f065539cef" />
+    <img width="909" alt="af62fdb38a3a297a7ba325181d09a9a" src="https://github.com/user-attachments/assets/548c11ed-cedd-4d51-af06-83a2018915bf" />
 </div>
 - 每方玩家有12个棋子，包括4个农民、4个卫兵、2个弓箭手、1个骑士和1个国王。<br>
 - 棋子的等级关系为：农民 < 卫兵 < 弓箭手 < 骑士 < 国王，但农民可以击杀国王。<br>
