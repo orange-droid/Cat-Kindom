@@ -51,7 +51,9 @@ Cat-Kindom is a strategy chess game based on the reinforcement learning (Q-learn
 pip install numpy pandas pillow
 ```
 
-训练ai - Train AI
+训练ai - Train AI<br>
+！!请注意由于Pillow读取图片导致训练速度太慢，请下载项目内的Cat-Kingdom-light文件压缩包，解压后运行其中的train.py，在data文件夹中找到agent1_q_table.csv和agent2_q_table.csv，复制粘贴至本项目的data文件夹中，再进行测试<br>
+! ! Please note that the training speed is too slow due to Pillow reading images. Please download the Cat-Kingdom-light file compression package in the project, unzip it and run the train.py in it. Find agent1_q_table.csv and agent2_q_table.csv in the data folder, copy and paste them into the data folder of this project, and then test it. <br>
 ```bash
 python train.py
 ```
