@@ -1,10 +1,14 @@
 # Cat-Kindom
-# 喵喵战旗游戏项目
+# 喵喵战棋游戏项目
 
 ## 项目简介-Project Introduction
-喵喵战旗是一款基于强化学习（Q-learning）算法的策略棋类游戏。玩家的目标是通过移动和揭示棋子，击杀对方的国王或使对方棋子全部被击杀。本项目使用Python语言实现，结合Tkinter库创建图形用户界面，支持玩家与AI对战。<br>
+喵喵战棋是一款基于强化学习（Q-learning）算法的策略棋类游戏。玩家的目标是通过移动和揭示棋子，“击杀”对方的国王或使对方棋子全部被“击杀”。本项目使用Python语言实现，结合Tkinter库创建图形用户界面，支持玩家与AI对战。<br>
 <br>
+
 Cat-Kindom is a strategy chess game based on the reinforcement learning (Q-learning) algorithm. The player's goal is to kill the opponent's king or kill all the opponent's pieces by moving and revealing the pieces. This project is implemented in Python language, combined with Tkinter library to create a graphical user interface, which supports players to play against AI.<br>
+#### ！！喜报！！(猫咪)不会受到任何伤害
+#### Please note that the word "kill" here is for ease of understanding. This game guarantees that no cats will be harmed.<br>
+
 ## 游戏规则-Game Rule
 <div align="center">
     <img width="909" alt="af62fdb38a3a297a7ba325181d09a9a" src="https://github.com/user-attachments/assets/548c11ed-cedd-4d51-af06-83a2018915bf" />
@@ -22,7 +26,7 @@ Cat-Kindom is a strategy chess game based on the reinforcement learning (Q-learn
     </blockquote>
 <br>
 - Each player has 12 pieces, including 4 peasants, 4 guards, 2 archers, 1 knight and 1 king. <br>
-- The level relationship of the pieces is: farmer < soldier < archer < knight < king, but farmer can kill king. <br>
+- The level relationship of the pieces is: Farmer < Soldier < Archer < Knight < King, but Farmer can kill King. <br>
 - At the beginning of the game, all pieces are in an unknown state, and players need to reveal their identities by turning over the pieces. <br>
 - In each round, players can choose to move pieces, turn over an unknown piece, or skip a round. <br>
 - Victory conditions: <br>
