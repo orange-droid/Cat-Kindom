@@ -36,3 +36,9 @@ python train.py
 ```bash
 python test.py
 ```
+
+游戏截图展示：
+<div align="center">
+    <img width="299" alt="screenshot" src="https://github.com/user-attachments/assets/dc505977-2832-4661-829a-67b179eecb11" />
+</div>
+
